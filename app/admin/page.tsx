@@ -1,0 +1,3 @@
+import Link from "next/link";import {redirect} from "next/navigation";import {getUserContext} from "@/lib/auth";import {AdminConsole} from "@/components/admin-console";
+export const dynamic="force-dynamic";
+export default async function AdminPage(){const c=await getUserContext();if(!c)redirect("/login");if(c.profile.role!=="admin")redirect("/dashboard");return <main className="panel"><div className="shell"><div className="panel-head"><div><div className="eyebrow">OWNER CONTROL PANEL</div><h1>Sir&apos;s Dashboard</h1><p className="muted">Manage courses and upload recorded lessons without editing code.</p></div><Link href="/dashboard" className="btn btn-light">Student view</Link></div><AdminConsole/></div></main>;}

@@ -1,0 +1,3 @@
+import {createHmac} from "node:crypto";
+type Claims={sub:string;lessonId:string;key:string;exp:number;iat:number};
+export function createMediaToken(input:{sub:string;lessonId:string;key:string},ttlSeconds=900){const secret=process.env.MEDIA_TOKEN_SECRET;if(!secret||secret.length<32)throw new Error("MEDIA_TOKEN_SECRET must be at least 32 characters.");const now=Math.floor(Date.now()/1000);const payload:Claims={...input,iat:now,exp:now+ttlSeconds};const encoded=Buffer.from(JSON.stringify(payload)).toString("base64url");const sig=createHmac("sha256",secret).update(encoded).digest("base64url");return encoded+"."+sig;}

@@ -1,0 +1,13 @@
+name = "bhandari-private-media"
+main = "worker.js"
+compatibility_date = "2026-11-26"
+
+[[r2_buckets]]
+binding = "VIDEOS"
+bucket_name = "bhandari-private-videos"
+
+[vars]
+CORS_ORIGIN = "https://your-production-domain.example"
+
+# Add the same random secret used in Vercel:
+# npx wrangler secret put MEDIA_TOKEN_SECRET

@@ -1,0 +1,3 @@
+import {createClient} from "@/lib/supabase/server";
+export async function getUserContext(){const supabase=await createClient();const {data:{user},error}=await supabase.auth.getUser();if(error||!user)return null;const {data:profile,error:profileError}=await supabase.from("profiles").select("role,full_name").eq("id",user.id).maybeSingle();if(profileError||!profile)return null;return {supabase,user,profile};}
+export async function requireAdminApi(){const c=await getUserContext();if(!c)return {ok:false as const,status:401,error:"Please sign in."};if(c.profile.role!=="admin")return {ok:false as const,status:403,error:"Admin access required."};return {ok:true as const,...c};}
