@@ -34,7 +34,7 @@ This is a deployable LMS foundation, not yet a finished commercial LMS.
 
 ## 2. Create the Supabase project
 1. Create a Supabase project. Add the Project URL and Publishable Key as NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY.
-2. Apply supabase/migrations/0001_lms.sql in the Supabase SQL Editor.
+2. Apply both SQL files in filename order in the Supabase SQL Editor: 0001_lms.sql followed by 0002_permissions_indexes.sql.
 3. In Authentication → URL Configuration, set the Site URL to your Vercel/custom domain and add the login redirect URL.
 4. Create the owner account at /signup. Then promote only that verified owner account in SQL Editor:
 
