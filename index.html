@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#142236" />
+  <title>Bhandari Classes | Mathematics & Quantitative Aptitude</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="demo-ribbon"><span class="pulse"></span> INTERACTIVE DEMO · SAMPLE DATA · NO REAL PAYMENTS</div>
+  <header class="site-header">
+    <a class="brand" href="#home" data-nav="home" aria-label="Bhandari Classes home">
+      <span class="brand-mark">B<span>∑</span></span>
+      <span class="brand-copy"><strong id="brandName">Bhandari Classes</strong><small>MATHS &amp; QUANT</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <button class="nav-link active" data-nav="home">Home</button>
+      <button class="nav-link" data-nav="courses">Courses</button>
+      <button class="nav-link" data-nav="about">Why us</button>
+      <button class="nav-link" data-nav="contact">Contact</button>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-ghost btn-sm" data-action="student">Student Login</button>
+      <button class="btn btn-primary btn-sm" data-action="admin">Sir's Dashboard <span>↗</span></button>
+      <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <main id="publicPage">
+    <section class="hero section-wrap" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> BHANDARI CLASSES <span class="eyebrow-divider">/</span> MATHS &amp; QUANT</div>
+        <h1 id="heroTitle">Master mathematics<br /><em>with confidence.</em></h1>
+        <p class="hero-subtitle" id="heroSubtitle">Concept-first mathematics for Classes 8–12 and focused quantitative aptitude preparation for competitive exams. Learn through recorded lessons, live classes and daily practice.</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary btn-lg" data-nav="courses">Explore courses <span>→</span></button>
+          <button class="btn btn-white btn-lg" data-action="student"><span class="play-icon">▶</span> Student Login</button>
+        </div>
+        <div class="hero-proof">
+          <div class="avatar-stack"><span>AS</span><span>RK</span><span>PM</span><b>+</b></div>
+          <div><strong>One teacher. A clear learning path.</strong><small>Concepts · Practice · Progress</small></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Mathematics learning illustration">
+        <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
+        <div class="math-card card-main">
+          <div class="math-card-top"><span class="mini-tag">TODAY'S CONCEPT</span><span class="dots">•••</span></div>
+          <div class="formula">a² + b² <span>=</span> c²</div>
+          <div class="formula-caption">Pythagoras theorem</div>
+          <svg viewBox="0 0 280 170" class="triangle-svg" role="img" aria-label="Right triangle illustration">
+            <path d="M54 136 L54 28 L220 136 Z" fill="#f8e7dd" stroke="#d76540" stroke-width="3" />
+            <path d="M54 118 L72 118 L72 136" fill="none" stroke="#d76540" stroke-width="2" />
+            <text x="31" y="87" fill="#9e4b30" font-size="13">a</text><text x="133" y="154" fill="#9e4b30" font-size="13">b</text><text x="146" y="72" fill="#9e4b30" font-size="13">c</text>
+          </svg>
+          <div class="lesson-progress"><span></span></div>
+          <div class="lesson-footer"><small>Concept clarity</small><strong>100%</strong></div>
+        </div>
+        <div class="float-card float-top"><span class="float-icon purple">✦</span><div><strong>Daily challenge</strong><small>One question a day</small></div></div>
+        <div class="float-card float-bottom"><span class="float-icon mint">✓</span><div><strong>Track your progress</strong><small>Learn · Practice · Improve</small></div></div>
+        <div class="visual-spark spark-one">✳</div><div class="visual-spark spark-two">＋</div>
+      </div>
+    </section>
+
+    <section class="trust-strip section-wrap">
+      <div><strong>8th–12th</strong><small>School Mathematics</small></div><i></i>
+      <div><strong>Quantitative Aptitude</strong><small>Competitive exam preparation</small></div><i></i>
+      <div><strong>Learn anywhere</strong><small>Mobile and desktop friendly</small></div>
+    </section>
+
+    <section class="section section-wrap" id="courses">
+      <div class="section-heading">
+        <div><div class="eyebrow">CHOOSE YOUR LEARNING PATH</div><h2>Courses designed for <em>your goals.</em></h2><p>Build a strong foundation, master important topics and practise with confidence.</p></div>
+        <a href="#courseGrid" class="text-link">Explore all courses <span>→</span></a>
+      </div>
+      <div class="filter-row">
+        <div class="filter-pills" id="courseFilters">
+          <button class="filter-pill selected" data-filter="all">All courses</button>
+          <button class="filter-pill" data-filter="school">School maths</button>
+          <button class="filter-pill" data-filter="competitive">Competitive exams</button>
+        </div>
+        <label class="search-box"><span>⌕</span><input id="courseSearch" type="search" placeholder="Search a course" aria-label="Search courses" /></label>
+      </div>
+      <div class="course-grid" id="courseGrid"></div>
+    </section>
+
+    <section class="daily-band">
+      <div class="section-wrap daily-band-inner">
+        <div class="daily-copy"><div class="eyebrow light">A LITTLE PRACTICE EVERY DAY</div><h2>Today's question.<br /><em>Tomorrow's confidence.</em></h2><p>Try a quick quantitative aptitude question and build a daily problem-solving habit.</p><button class="btn btn-white" data-action="student">Try the daily challenge <span>→</span></button></div>
+        <div class="daily-preview"><div class="daily-preview-top"><span>✦ DAILY CHALLENGE</span><span class="level-chip">QUICK PRACTICE</span></div><div class="question-number">01 <small>/ TODAY</small></div><h3>If 25% of a number is 80, what is 40% of that number?</h3><div class="option-preview"><span>A</span> 128 <span class="option-check">✓</span></div><div class="option-preview"><span>B</span> 120</div><div class="option-preview"><span>C</span> 100</div><div class="option-preview"><span>D</span> 160</div><small class="preview-note">Log in to submit your answer and see the solution.</small></div>
+      </div>
+    </section>
+
+    <section class="section section-wrap" id="about">
+      <div class="section-heading centered"><div class="eyebrow">A BETTER WAY TO LEARN</div><h2>Everything you need to <em>make progress.</em></h2><p>One learning space for classes, practice and progress tracking.</p></div>
+      <div class="feature-grid">
+        <article class="feature-card"><span class="feature-icon icon-blue">▣</span><h3>Learn on your schedule</h3><p>Revisit recorded lessons and learn concepts at a comfortable pace.</p></article>
+        <article class="feature-card"><span class="feature-icon icon-purple">◉</span><h3>Live interactive classes</h3><p>Join scheduled online classes and learn directly with your teacher.</p></article>
+        <article class="feature-card"><span class="feature-icon icon-orange">✎</span><h3>Practise with purpose</h3><p>Attempt topic-wise quizzes, daily questions and practice tests.</p></article>
+        <article class="feature-card"><span class="feature-icon icon-green">↗</span><h3>See your improvement</h3><p>Track course progress, quiz scores and your learning journey.</p></article>
+      </div>
+    </section>
+
+    <section class="section section-wrap teacher-section">
+      <div class="teacher-art"><div class="teacher-circle"><span>BC</span></div><div class="teacher-note note-a">Concept first</div><div class="teacher-note note-b">Practice daily</div><div class="teacher-equation">∑ x² + √y</div></div>
+      <div class="teacher-copy"><div class="eyebrow">PERSONAL GUIDANCE</div><h2>Learn step by step.<br /><em>Grow with confidence.</em></h2><p>Clear explanations, structured lessons and regular practice help students understand the logic behind every answer.</p><div class="teacher-points"><span>✓ Clear concept explanation</span><span>✓ Structured topic-wise lessons</span><span>✓ Regular practice and assessment</span></div><button class="btn btn-primary" data-action="student">Start learning <span>→</span></button></div>
+    </section>
+
+    <section class="contact-section" id="contact"><div class="section-wrap contact-inner"><div><div class="eyebrow light">HAVE A QUESTION?</div><h2>Let's make learning<br /><em>happen.</em></h2><p>Speak with Bhandari Classes to know more about courses, batches and online learning.</p></div><div class="contact-card"><div class="contact-line"><span>✉</span><div><small>EMAIL</small><strong id="contactEmail">Add official email address</strong></div></div><div class="contact-line"><span>☎</span><div><small>CALL / WHATSAPP</small><strong id="contactPhone">Add official phone number</strong></div></div><div class="contact-line"><span>⌖</span><div><small>LOCATION</small><strong id="contactLocation">Add institute address</strong></div></div></div></div></section>
+  </main>
+
+  <main id="studentPage" class="app-page hidden">
+    <div class="dashboard-shell">
+      <aside class="dashboard-sidebar" id="studentSidebar">
+        <div class="sidebar-label">STUDENT MENU</div>
+        <button class="side-link active" data-student-tab="overview">▦ <span>Overview</span></button>
+        <button class="side-link" data-student-tab="mycourses">▣ <span>My courses</span></button>
+        <button class="side-link" data-student-tab="live">◉ <span>Live classes</span><b class="side-count">2</b></button>
+        <button class="side-link" data-student-tab="quizzes">✎ <span>Quizzes</span></button>
+        <button class="side-link" data-student-tab="daily">✦ <span>Daily question</span></button>
+        <button class="side-link" data-student-tab="profile">◎ <span>My profile</span></button>
+        <div class="sidebar-help"><div class="help-icon">?</div><strong>Need help?</strong><small>Reach out to the academy for assistance.</small><button data-action="contact">Contact support →</button></div>
+      </aside>
+      <section class="dashboard-content">
+        <div class="dashboard-top"><div><div class="eyebrow">YOUR LEARNING SPACE</div><h1 id="studentGreeting">Welcome back, Student 👋</h1><p>Keep learning. You're making progress.</p></div><div class="top-user"><span class="notification-dot">♧</span><div class="user-avatar">S</div><div><strong>Student Demo</strong><small>Class 10 · Learner</small></div></div></div>
+        <div id="studentContent"></div>
+      </section>
+    </div>
+  </main>
+
+  <main id="adminPage" class="app-page hidden">
+    <div class="dashboard-shell admin-shell">
+      <aside class="dashboard-sidebar admin-sidebar" id="adminSidebar">
+        <div class="admin-brand"><span class="brand-mark small-mark">B<span>∑</span></span><div><strong>Bhandari Classes</strong><small>TEACHER CONTROL PANEL</small></div></div>
+        <div class="sidebar-label">MANAGE ACADEMY</div>
+        <button class="side-link active" data-admin-tab="overview">▦ <span>Overview</span></button>
+        <button class="side-link" data-admin-tab="courses">▣ <span>Courses</span></button>
+        <button class="side-link" data-admin-tab="lessons">▶ <span>Video lectures</span></button>
+        <button class="side-link" data-admin-tab="quizzes">✎ <span>Quiz builder</span></button>
+        <button class="side-link" data-admin-tab="daily">✦ <span>Daily questions</span></button>
+        <button class="side-link" data-admin-tab="live">◉ <span>Live classes</span></button>
+        <button class="side-link" data-admin-tab="students">♙ <span>Students</span></button>
+        <div class="sidebar-label sidebar-label-spaced">WEBSITE</div>
+        <button class="side-link" data-admin-tab="editor">▤ <span>Website editor</span><b class="new-badge">EDIT</b></button>
+        <button class="side-link" data-admin-tab="settings">⚙ <span>Settings</span></button>
+        <div class="admin-sidebar-bottom"><div class="user-avatar teacher-avatar">T</div><div><strong>Teacher / Owner</strong><small>Full access</small></div><span class="online-dot"></span></div>
+      </aside>
+      <section class="dashboard-content admin-content">
+        <div class="dashboard-top admin-top"><div><div class="eyebrow">BHANDARI CLASSES · TEACHER CONSOLE</div><h1 id="adminHeading">Good morning, Sir 👋</h1><p>Manage your classes, content and website from one place.</p></div><div class="admin-top-actions"><span class="secure-label">● Demo mode</span><button class="btn btn-dark btn-sm" data-nav="home">↗ View website</button></div></div>
+        <div id="adminContent"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="section-wrap footer-inner"><a class="brand footer-brand" href="#home" data-nav="home"><span class="brand-mark">B<span>∑</span></span><span class="brand-copy"><strong id="footerBrand">Bhandari Classes</strong><small>MATHS &amp; QUANT</small></span></a><p>Strong concepts. Smart practice. Better results.</p><small>© <span id="year"></span> <span id="footerBrandText">Bhandari Classes</span>. Interactive demo website.</small></div></footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop hidden" id="modalBackdrop"><div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="Close">×</button><div id="modalBody"></div></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
