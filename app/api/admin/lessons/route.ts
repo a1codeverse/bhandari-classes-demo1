@@ -1,3 +1,22 @@
-import {NextRequest,NextResponse} from "next/server";import {HeadObjectCommand,S3Client} from "@aws-sdk/client-s3";import {requireAdminApi} from "@/lib/auth";
+import {NextRequest,NextResponse} from "next/server";
+import {requireAdminApi} from "@/lib/auth";
 export const runtime="nodejs";
-export async function POST(request:NextRequest){const a=await requireAdminApi();if(!a.ok)return NextResponse.json({error:a.error},{status:a.status});const b=await request.json().catch(()=>null);const courseId=typeof b?.courseId==="string"?b.courseId:"";const title=typeof b?.title==="string"?b.title.trim():"";const objectKey=typeof b?.objectKey==="string"?b.objectKey:"";if(!courseId||title.length<3||title.length>140||!objectKey.startsWith("videos/"+courseId+"/"))return NextResponse.json({error:"Invalid course, title or object key."},{status:400});const account=process.env.R2_ACCOUNT_ID,access=process.env.R2_ACCESS_KEY_ID,secret=process.env.R2_SECRET_ACCESS_KEY,bucket=process.env.R2_BUCKET_NAME;if(!account||!access||!secret||!bucket)return NextResponse.json({error:"R2 is not configured."},{status:503});const s3=new S3Client({region:"auto",endpoint:"https://"+account+".r2.cloudflarestorage.com",credentials:{accessKeyId:access,secretAccessKey:secret}});try{const head=await s3.send(new HeadObjectCommand({Bucket:bucket,Key:objectKey}));if(!head.ContentLength||head.ContentLength>4*1024*1024*1024)throw new Error("Uploaded video size is invalid.");const{data,error}=await a.supabase.from("lessons").insert({course_id:courseId,title,object_key:objectKey,content_type:head.ContentType||"video/mp4",size_bytes:head.ContentLength,is_published:false,created_by:a.user.id}).select("id,title").single();if(error)throw error;return NextResponse.json({lesson:data},{status:201});}catch(e){return NextResponse.json({error:e instanceof Error?e.message:"Could not verify uploaded video."},{status:400});}}
+export async function POST(request:NextRequest){
+ const a=await requireAdminApi();
+ if(!a.ok)return NextResponse.json({error:a.error},{status:a.status});
+ const b=await request.json().catch(()=>null);
+ const courseId=typeof b?.courseId==="string"?b.courseId:"";
+ const title=typeof b?.title==="string"?b.title.trim():"";
+ const filePath=typeof b?.filePath==="string"?b.filePath:"";
+ const size=Number(b?.sizeBytes);
+ const contentType=typeof b?.contentType==="string"?b.contentType:"";
+ const expectedPrefix="/bhandari-private-videos/"+courseId+"/";
+ if(!courseId||title.length<3||title.length>140||!filePath.startsWith(expectedPrefix)||!Number.isFinite(size)||size<=0||size>4*1024*1024*1024||!["video/mp4","video/webm"].includes(contentType)){
+  return NextResponse.json({error:"Invalid course, title or uploaded video details."},{status:400});
+ }
+ const{data:course}=await a.supabase.from("courses").select("id").eq("id",courseId).maybeSingle();
+ if(!course)return NextResponse.json({error:"Course not found."},{status:404});
+ const{data,error}=await a.supabase.from("lessons").insert({course_id:courseId,title,object_key:filePath,content_type:contentType,size_bytes:size,is_published:false,created_by:a.user.id}).select("id,title").single();
+ if(error)return NextResponse.json({error:error.message},{status:400});
+ return NextResponse.json({lesson:data},{status:201});
+}
