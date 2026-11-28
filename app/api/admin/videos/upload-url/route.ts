@@ -1,3 +1,26 @@
-import {randomUUID} from "node:crypto";import {NextRequest,NextResponse} from "next/server";import {S3Client,PutObjectCommand} from "@aws-sdk/client-s3";import {getSignedUrl} from "@aws-sdk/s3-request-presigner";import {requireAdminApi} from "@/lib/auth";
-export const runtime="nodejs";const MAX_FILE_BYTES=4*1024*1024*1024;
-export async function POST(request:NextRequest){const a=await requireAdminApi();if(!a.ok)return NextResponse.json({error:a.error},{status:a.status});const b=await request.json().catch(()=>null);const courseId=typeof b?.courseId==="string"?b.courseId:"";const fileName=typeof b?.fileName==="string"?b.fileName:"";const contentType=typeof b?.contentType==="string"?b.contentType:"";const size=Number(b?.sizeBytes);if(!courseId||!fileName||!Number.isFinite(size)||size<=0||size>MAX_FILE_BYTES)return NextResponse.json({error:"Invalid file or file exceeds the 4GB single-upload limit."},{status:400});if(!["video/mp4","video/webm"].includes(contentType))return NextResponse.json({error:"Only MP4 and WebM files are accepted."},{status:415});const{data:course}=await a.supabase.from("courses").select("id").eq("id",courseId).maybeSingle();if(!course)return NextResponse.json({error:"Course not found."},{status:404});const account=process.env.R2_ACCOUNT_ID,access=process.env.R2_ACCESS_KEY_ID,secret=process.env.R2_SECRET_ACCESS_KEY,bucket=process.env.R2_BUCKET_NAME;if(!account||!access||!secret||!bucket)return NextResponse.json({error:"R2 server credentials are not configured."},{status:503});const s3=new S3Client({region:"auto",endpoint:"https://"+account+".r2.cloudflarestorage.com",credentials:{accessKeyId:access,secretAccessKey:secret}});const ext=contentType==="video/webm"?"webm":"mp4";const objectKey="videos/"+courseId+"/"+randomUUID()+"."+ext;const command=new PutObjectCommand({Bucket:bucket,Key:objectKey,ContentType:contentType,Metadata:{uploadedby:a.user.id,courseid:courseId}});const uploadUrl=await getSignedUrl(s3,command,{expiresIn:600});return NextResponse.json({objectKey,uploadUrl,expiresIn:600,requiredHeaders:{"Content-Type":contentType}},{headers:{"Cache-Control":"no-store, private"}});}
+import {createHmac,randomUUID} from "node:crypto";
+import {NextRequest,NextResponse} from "next/server";
+import {requireAdminApi} from "@/lib/auth";
+export const runtime="nodejs";
+const MAX_FILE_BYTES=4*1024*1024*1024;
+export async function POST(request:NextRequest){
+ const a=await requireAdminApi();
+ if(!a.ok)return NextResponse.json({error:a.error},{status:a.status});
+ const b=await request.json().catch(()=>null);
+ const courseId=typeof b?.courseId==="string"?b.courseId:"";
+ const fileName=typeof b?.fileName==="string"?b.fileName:"";
+ const contentType=typeof b?.contentType==="string"?b.contentType:"";
+ const size=Number(b?.sizeBytes);
+ if(!courseId||!fileName||!Number.isFinite(size)||size<=0||size>MAX_FILE_BYTES)return NextResponse.json({error:"Invalid file or file exceeds the 4GB upload limit."},{status:400});
+ if(!["video/mp4","video/webm"].includes(contentType))return NextResponse.json({error:"Only MP4 and WebM files are accepted."},{status:415});
+ const{data:course}=await a.supabase.from("courses").select("id").eq("id",courseId).maybeSingle();
+ if(!course)return NextResponse.json({error:"Course not found."},{status:404});
+ const privateKey=process.env.IMAGEKIT_PRIVATE_KEY;
+ const publicKey=process.env.IMAGEKIT_PUBLIC_KEY;
+ if(!privateKey||!publicKey)return NextResponse.json({error:"ImageKit server credentials are not configured."},{status:503});
+ const token=randomUUID();
+ const expire=Math.floor(Date.now()/1000)+30*60;
+ const signature=createHmac("sha1",privateKey).update(token+expire).digest("hex");
+ const folder="/bhandari-private-videos/"+courseId;
+ return NextResponse.json({token,expire,signature,publicKey,folder},{headers:{"Cache-Control":"no-store, private"}});
+}
